@@ -22,10 +22,34 @@ router.get('/players', async (req, res) => {
             const players = await Player.find({ web_name: req.query.name }) 
             res.send(players)
         }
+        
         if (req.query.fixtures) {
             const { data }= await axios.get(`https://fantasy.premierleague.com/api/element-summary/${req.query.fixtures}/`)
             res.send(data)
         }
+
+        // if (req.query.changes) {
+        //     console.log('hello')
+        //     const { data: { elements: newPlayers } } = await axios.get('https://fantasy.premierleague.com/api/bootstrap-static/')
+        //     const promises = newPlayers.map(async (player) => {
+        //         const oldPlayers = await Player.find({id: player.id})
+        //         const oldPlayer = oldPlayers[0]
+        //         if (oldPlayer === undefined) {
+        //             return `New player: ${player.web_name} $${player.now_cost / 10}`
+        //         } 
+        //         else if ( oldPlayer.now_cost != player.now_cost) {
+        //             const diff = player.now_cost - oldPlayer.now_cost
+        //             let changeSign = ''
+        //             diff > 0 ? changeSign = '+' : changeSign = ''
+        //             return `${player.web_name} ${changeSign, diff} to $${player.now_cost / 10}`
+        //         }    
+        //     })
+        //     console.log(promises)
+        //     const playerChanges = await Promise.all(promises)
+        //     console.log(playerChanges)
+        //     const result = playerChanges.filter(res => res != null)
+        //     res.send(result)
+        // }
     } catch (e) {
         res.status(400).send()
     }

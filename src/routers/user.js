@@ -5,7 +5,13 @@ const validateAddUser = require('../validation/addUser')
 
 router.get('/users', async (req, res) => {
     try {
-        if (req.query) {
+        if (req.query.email === 'all') {
+            const users = await User.find({}) 
+            const emails = users.map(user => user.email)
+            res.send(emails)
+        }
+        else if (req.query) {
+            console.log(req.query)
             const user = await User.find({email: req.query.email, password: req.query.password})
             if (user.length === 0) {
                 res.send({error: `Incorrect details.`})

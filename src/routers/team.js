@@ -18,7 +18,7 @@ router.get('/teams', async (req, res) => {
     }
 })
 
-router.get('/add-all-teams', async (req, res) => {
+router.post('/add-all-teams', async (req, res) => {
     try {
         const { data: { teams } } = await axios.get(`https://fantasy.premierleague.com/api/bootstrap-static/`)
 
